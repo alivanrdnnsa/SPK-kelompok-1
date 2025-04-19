@@ -49,10 +49,10 @@
     const novels = [
       { title: "Cinta Tak Terbalas", genres: ["Romance"] },
       { title: "Petualang Dunia Lain", genres: ["Fantasy"] },
-      { title: "Misteri di Balik Rumah Tua", genres: ["Horror"] },
+      { title: "Misteri di Balik Rumah Tua", genres: ["Horror","Comedy"] },
       { title: "Rahasia Sang Penulis", genres: ["Mystery"] },
       { title: "Darah di Langit", genres: ["Horror"] },
-      { title: "Chillin Buddy", genres: ["comedy"] },
+      { title: "Chillin Buddy", genres: ["Comedy"] },
       
     ];
 
@@ -63,6 +63,7 @@
         horror: parseInt(document.getElementById("horror").value),
         mystery: parseInt(document.getElementById("mystery").value),
         comedy: parseInt(document.getElementById("comedy").value),
+        
       };
 
       const scored = novels.map(novel => {
