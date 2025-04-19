@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rekomendasi Wattpad</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    h1 { text-align: center; }
+    .slider-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; }
+    input[type=range] { width: 100%; }
+    button { padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .novel-card { margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Rekomendasi Wattpad</h1>
+  <p>Masukkan preferensi genre kamu (1 = kurang suka, 5 = sangat suka):</p>
+
+  <div class="slider-group">
+    <label for="romance">Romance</label>
+    <input type="range" id="romance" min="1" max="5" value="3">
+  </div>
+  <div class="slider-group">
+    <label for="fantasy">Fantasy</label>
+    <input type="range" id="fantasy" min="1" max="5" value="3">
+  </div>
+  <div class="slider-group">
+    <label for="horror">Horror</label>
+    <input type="range" id="horror" min="1" max="5" value="3">
+  </div>
+  <div class="slider-group">
+    <label for="mystery">Mystery</label>
+    <input type="range" id="mystery" min="1" max="5" value="3">
+  </div>
+  <div class="slider-group">
+    <label for="comedy">Comedy</label>
+    <input type="range" id="comedy" min="1" max="5" value="3">
+  </div>
+
+  <button onclick="generateRecommendation()">Dapatkan Rekomendasi</button>
+
+  <h2>Hasil Rekomendasi:</h2>
+  <div id="recommendationResults"></div>
+
+  <script>
+    const novels = [
+      { title: "Cinta Tak Terbalas", genres: ["Romance"] },
+      { title: "Petualang Dunia Lain", genres: ["Fantasy"] },
+      { title: "Misteri di Balik Rumah Tua", genres: ["Horror"] },
+      { title: "Rahasia Sang Penulis", genres: ["Mystery"] },
+      { title: "Darah di Langit", genres: ["Horror"] },
+      { title: "Chillin Buddy", genres: ["comedy"] },
+      
+    ];
+
+    function generateRecommendation() {
+      const weights = {
+        romance: parseInt(document.getElementById("romance").value),
+        fantasy: parseInt(document.getElementById("fantasy").value),
+        horror: parseInt(document.getElementById("horror").value),
+        mystery: parseInt(document.getElementById("mystery").value),
+        comedy: parseInt(document.getElementById("comedy").value),
+      };
+
+      const scored = novels.map(novel => {
+        let score = 0;
+        novel.genres.forEach(g => {
+          score += weights[g.toLowerCase()] || 0;
+        });
+        return { ...novel, score };
+      });
+
+      scored.sort((a, b) => b.score - a.score);
+
+      const resultsDiv = document.getElementById("recommendationResults");
+      resultsDiv.innerHTML = '';
+      scored.forEach(novel => {
+        const card = document.createElement("div");
+        card.className = "novel-card";
+        card.innerHTML = `<strong>${novel.title}</strong><br>Genre: ${novel.genres.join(", ")}<br>Skor: ${novel.score}`;
+        resultsDiv.appendChild(card);
+      });
+    }
+  </script>
+</body>
+</html>
